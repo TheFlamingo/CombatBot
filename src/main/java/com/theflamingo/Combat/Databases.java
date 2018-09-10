@@ -8,11 +8,24 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Databases {
 	
+	/*
+	 * Visualization of items List structure
+	 * 
+	 * Item List
+	 * 	- index 0 List
+	 * 		- itemName
+	 * 		- itemDamage
+	 * 	- index 1 List
+	 * 		- itemName
+	 * 		- itemDamage
+	 */
+	
 	//format: {'user-name, 'health'}
 	public static List<List<String>> users = new ArrayList<List<String>>(); 
 	//stores what items each user has. user at index 0 will have their items stored at index 0 in this database.
 	public static  List<List<String>> userItems = new ArrayList<List<String>>(); 
 	//format: {'item-name', 'damage', 'extra-info'}
+	
 	public static List<List<String>> items = new ArrayList<List<String>>();
 	
 	//creates a new String List that will contain a new user's info.
@@ -54,14 +67,37 @@ public class Databases {
 		
 		//checks that itemDamage contains only numbers, and adds itemDamage to index 1 in the newly created String List
 		if (itemDamage.matches("^[0-9]+$")) items.get(getLatestIndexItems()).add(1, itemDamage);
-		else sendErrorMessage(evt);
+		else sendCreateItemErrorMessage(evt);
 	}
 	
-	private static void sendErrorMessage(MessageReceivedEvent evt) {
+	public static void removeItem(String itemName, MessageReceivedEvent evt) {
+		
+		for (int i = 0; i < items.size(); i++) {
+			// If the string at the first index in items.get(i) equals the itemName argument, remove the item List from items.
+			if (items.get(i).get(0).equals(itemName)) {
+				items.remove(i);
+				return;
+			}
+		}
+		
+		// Reach this only if the for loop goes all the way through without finding a match.
+		sendRemoveItemErrorMessage(evt);
+	}
+	
+	private static void sendCreateItemErrorMessage(MessageReceivedEvent evt) {
 		
 		EmbedBuilder build = new EmbedBuilder();
 		build.setTitle("Error");
 		build.setDescription("Couldn't add item to database");
+		
+		evt.getChannel().sendMessage(build.build()).queue();
+	}
+	
+	private static void sendRemoveItemErrorMessage(MessageReceivedEvent evt) {
+		
+		EmbedBuilder build = new EmbedBuilder();
+		build.setTitle("Error");
+		build.setDescription("Couldn't find any item by the name provided");
 		
 		evt.getChannel().sendMessage(build.build()).queue();
 	}
