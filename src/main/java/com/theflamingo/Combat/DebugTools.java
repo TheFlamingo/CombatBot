@@ -12,6 +12,7 @@ public class DebugTools extends ListenerAdapter {
 		String[] strArgs = msg.getContentRaw().split(" ");
 			
 		try {
+			//c debug users - displays a list of all users in users database
 			if ((strArgs[0] + strArgs[1] + strArgs[2]).equals(Ref.PREFIX + "debug" + "users")) {
 				
 				if (strArgs.length == 3) {
@@ -20,6 +21,7 @@ public class DebugTools extends ListenerAdapter {
 					System.out.println("error in debug tools users**");
 				}
 			}
+			//c debug additem - adds an item to the item database
 			else if ((strArgs[0] + strArgs[1] + strArgs[2]).equals(Ref.PREFIX + "debug" + "additem")) {
 				
 				if (strArgs.length == 5) {
@@ -28,6 +30,7 @@ public class DebugTools extends ListenerAdapter {
 					System.out.println("error in debug tools additem**");
 				}
 			}
+			//c debug itmes - displays a list of all items in items database
 			else if ((strArgs[0] + strArgs[1] + strArgs[2]).equals(Ref.PREFIX + "debug" + "items")) {
 				
 				if (strArgs.length == 3) {
@@ -67,5 +70,4 @@ public class DebugTools extends ListenerAdapter {
 			System.out.println();
 		}
 	}
-	
 }
