@@ -3,6 +3,9 @@ package com.theflamingo.Combat;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
 public class Databases {
 	
 	//format: {'user-name, 'health'}
@@ -15,6 +18,9 @@ public class Databases {
 	//creates a new String List that will contain a new user's info.
 	public static void createUserStringList() {
 		users.add(new ArrayList<String>());
+	}
+	public static void createItemStringList() {
+		items.add(new ArrayList<String>());
 	}
 	
 	//gets the newest index in users db
@@ -36,5 +42,27 @@ public class Databases {
 		
 		int lastIndex = items.size() - 1; 
 		return lastIndex;
+	}
+	
+	public static void createItem(String itemName, String itemDamage, MessageReceivedEvent evt) {
+		
+		//creates a new String List that will store the new item
+		items.add(new ArrayList<String>());
+		
+		//adds the item name at index 0 in newly created String List
+		items.get(getLatestIndexItems()).add(0, itemName);
+		
+		//checks that itemDamage contains only numbers, and adds itemDamage to index 1 in the newly created String List
+		if (itemDamage.matches("^[0-9]+$")) items.get(getLatestIndexItems()).add(1, itemDamage);
+		else sendErrorMessage(evt);
+	}
+	
+	private static void sendErrorMessage(MessageReceivedEvent evt) {
+		
+		EmbedBuilder build = new EmbedBuilder();
+		build.setTitle("Error");
+		build.setDescription("Couldn't add item to database");
+		
+		evt.getChannel().sendMessage(build.build()).queue();
 	}
 }
