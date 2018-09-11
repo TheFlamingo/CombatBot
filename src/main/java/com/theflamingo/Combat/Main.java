@@ -15,5 +15,6 @@ public class Main extends ListenerAdapter {
 		
 		jda.addEventListener(new CommandNew());
 		jda.addEventListener(new DebugTools());
+		jda.addEventListener(new CommandAttack());
 	}
 }
