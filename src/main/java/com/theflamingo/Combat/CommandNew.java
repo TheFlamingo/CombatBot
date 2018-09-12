@@ -2,7 +2,6 @@ package com.theflamingo.Combat;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -19,7 +18,7 @@ public class CommandNew extends ListenerAdapter {
 					
 					createUser(evt);
 				} else {
-					sendErrorMessage(evt);
+					ErrorMessages.sendAddErrorMessage(evt);
 				}
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {}
@@ -39,26 +38,15 @@ public class CommandNew extends ListenerAdapter {
 		//debug message
 		System.out.println(Databases.users.get(lastIndex).get(0));
 		
-		sendCompleteMessage(evt);
+		sendAccountCompleteMessage(evt);
 		
 	}
 	
-	private void sendCompleteMessage(MessageReceivedEvent evt) {
+	public static void sendAccountCompleteMessage(MessageReceivedEvent evt) {
 		
 		EmbedBuilder build = new EmbedBuilder();
 		build.setTitle("Done");
 		build.setDescription("Account created");
-		
-		evt.getChannel().sendMessage(build.build()).queue();
-		
-	}
-	
-	//if any errors are found, the flow is redirected here. Sends embedded message with proper usage.
-	private void sendErrorMessage (MessageReceivedEvent evt) {
-		
-		EmbedBuilder build = new EmbedBuilder();
-		build.setTitle("Invalid Usage");
-		build.addField("Proper usage:", "c add", false);
 		
 		evt.getChannel().sendMessage(build.build()).queue();
 		
