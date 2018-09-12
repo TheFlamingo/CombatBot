@@ -46,7 +46,6 @@ public class CommandAttack extends ListenerAdapter {
 		if (strArgs.length == 4 && Databases.checkUserExistance(author) && Databases.checkItemExistance(strArgs[3].toLowerCase())) {
 			return true;
 		} else {
-			
 			// Checks if the issuer of the command has created an account with c new
 			if (!Databases.checkUserExistance(author)) {
 				ErrorMessages.sendAccountNotCreatedErrorMessage(evt);
@@ -65,6 +64,7 @@ public class CommandAttack extends ListenerAdapter {
 	}
 	
 	private void sendAttackCompleteMessage(MessageReceivedEvent evt, String[] strArgs) {
+		
 		int itemIndex = Databases.getItemIndex(strArgs[3]);
 		
 		EmbedBuilder build = new EmbedBuilder();
