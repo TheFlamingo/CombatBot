@@ -83,6 +83,8 @@ public class DebugTools extends ListenerAdapter {
 		
 		for (int i = 0; i < Databases.users.size(); i++) {
 			System.out.println(Databases.users.get(i).get(0));
+			System.out.println(Databases.users.get(i).get(1));
+			System.out.println();
 		}
 	}
 
